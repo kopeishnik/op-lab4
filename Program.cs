@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Text;
 
 namespace bmpTest
 {
@@ -20,9 +18,10 @@ namespace bmpTest
                 Console.Beep(); 
                 return -1;
             }
-            Pict inp = new Pict(_path + args[0]);
+            _flName = args[0];
             _nFlName = args[1];
             _szCoef = Double.Parse(args[2]);
+            Pict inp = new Pict(_path + _flName);
             if (_szCoef < 0)
             {
                 Console.WriteLine("Mirroring the image!");
