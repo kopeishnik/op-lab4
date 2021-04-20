@@ -11,18 +11,28 @@ namespace bmpTest
         private static string _nFlName;
         private static double _szCoef = 1;
 
-        static string Main(string[] args)
+        static int Main(string[] args)
         {
-            _path = Environment.CurrentDirectory + @"\";
-            if (args.Length < 4) return "Too few arguments!";
+            _path = Environment.CurrentDirectory+@"\";
+            if (args.Length < 4)
+            {
+                Console.WriteLine("Too few arguments!");
+                Console.Beep();
+                return -1;
+            }
             Pict inp = new Pict(_path + args[0]);
             _szCoef = Double.Parse(args[2]);
             _nFlName = args[3];
-            if (_szCoef < 0) return "Size coefficient should be positive!";
+            if (_szCoef < 0)
+            {
+                Console.WriteLine("Size coefficient should be positive!");
+                Console.Beep();
+                return -1;
+            }
             switch (args[1])
             {
                 case "--enlarge":
-                    if (_szCoef > 1 && _szCoef % 1 == 0) inp.Enlarge((short)_szCoef);
+                    if (_szCoef>1&&_szCoef%1==0) inp.Enlarge((short)_szCoef);
                     else inp.Enlarge(_szCoef);
                     break;
                 case "--reduce":
@@ -30,7 +40,8 @@ namespace bmpTest
                     break;
             }
             inp.ToFile(_path + _nFlName);
-            return "Success!";
+            Console.WriteLine("Success!");
+            return 0;
         }
 
         static void GetFromUser()
