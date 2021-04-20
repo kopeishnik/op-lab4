@@ -132,10 +132,6 @@ namespace bmpTest
                 ? _realW * _realH * 3
                 : (_realW * 3 + 4 - _realW * 3 % 4) * _realH);
         }
-        public void Reduce(Int16 coef)
-        {
-            Console.WriteLine("It does NOT work! What did you expected?");
-        }
         public void BiLinearInterpolation(Double coef) 
         {
             var newH = (int)Math.Round(_realH * coef, MidpointRounding.AwayFromZero);
@@ -168,7 +164,6 @@ namespace bmpTest
             }
             for (int i = 0; i < newW; i++)
             {
-                //nData[i] = new byte[newW][];
                 for (int j = 0; j < newH; j++)
                 {
                     nnData[i][j] = new byte[3];
