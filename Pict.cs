@@ -140,10 +140,31 @@ namespace bmpTest
         {
             var newH = (int)Math.Round(_realH * coef, MidpointRounding.AwayFromZero);
             var newW = (int)Math.Round(_realW * coef, MidpointRounding.AwayFromZero);
-            //byte[][][] nData = new byte[newH][][];
-            for (int i = 0; i < newH; i++)
+            byte[][][] nData = new byte[_realH][][];
+            for (int i = 0; i < _realH; i++)
             {
-                continue;
+                nData[i] = new byte[newW][];
+                for (int j = 0; j < newW; j++)
+                {
+                    nData[i][j] = new byte[3];
+                    double placeInOld = (double) (j + 1) * _realW / newW;
+                    if (placeInOld < 1) nData[i][j] = _data[i][0];
+                    else if (placeInOld > (double)_realW - 1) nData[i][j] = _data[i][_realW - 1];
+                    else {
+                        var lower = (int)Math.Round(placeInOld, MidpointRounding.ToNegativeInfinity);
+                        double coefLeft = placeInOld - lower;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            var clr = (double)_data[i][lower][k] * coefLeft + (double)_data[i][lower + 1][k] * (1 - coefLeft);
+                            nData[i][j][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
+                        }
+                    }
+                }
+            }
+            byte[][][] nnData = new byte[newH][][];
+            for (int i = 0; i < newH; i++) 
+            {
+                nnData[i] = new byte[newW][];
             }
             Console.WriteLine("Currently rabotayu.");
         }
