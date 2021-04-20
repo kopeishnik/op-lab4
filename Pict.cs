@@ -186,9 +186,23 @@ namespace bmpTest
                     }
                 }
             }
+            _realH *= newH;
+            _realW *= newH;
+            if (_pictH16 == 0 && _pictW16 == 0)
+            {
+                _pictH32 = newH;
+                _pictW32 = newW;
+            } 
+            else if (_pictH32 == 0 && _pictW32 == 0) 
+            {
+                _pictH16 = (short)newH;
+                _pictW16 = (short)newW;
+            }
+            else {
+                Console.WriteLine("Error hapenned!");
+            }
             _data = nnData;
             _flSize = 14 + bcSize + (_realW % 4 == 0 ? _realW * _realH * 3 : (_realW * 3 + 4 - _realW * 3 % 4) * _realH);
-            Console.WriteLine("Currently rabotayu.");
         }
     }
 }
