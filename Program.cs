@@ -14,30 +14,31 @@ namespace bmpTest
         static int Main(string[] args)
         {
             _path = Environment.CurrentDirectory+@"\";
-            if (args.Length < 4)
+            if (args.Length < 3)
             {
                 Console.WriteLine("Too few arguments!");
-                Console.Beep();
+                Console.Beep(); 
                 return -1;
             }
             Pict inp = new Pict(_path + args[0]);
+            _nFlName = args[1];
             _szCoef = Double.Parse(args[2]);
-            _nFlName = args[3];
             if (_szCoef < 0)
             {
-                Console.Beep(); // why not axaxaxax (pust budet)
+                Console.WriteLine("Mirroring the image!");
                 inp.Mirror();
                 _szCoef *= -1;
             }
-            switch (args[1])
+            if (_szCoef == 0) {
+                Console.WriteLine("What?.. 0? How?");
+            }
+            else if (_szCoef == Math.Round(_szCoef, MidpointRounding.ToNegativeInfinity) && _szCoef > 1)
             {
-                case "--enlarge":
-                    if (_szCoef>1&&_szCoef%1==0) inp.Enlarge((short)_szCoef);
-                    else inp.Enlarge((short)_szCoef);
-                    break;
-                case "--reduce":
-                    inp.Reduce((short)_szCoef); //workn't
-                    break;
+                inp.Enlarge((short)_szCoef);
+            }
+            else
+            {
+                inp.BiLinearInterpolation(_szCoef);
             }
             inp.ToFile(_path + _nFlName);
             Console.WriteLine("Success!");
