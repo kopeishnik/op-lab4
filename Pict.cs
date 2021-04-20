@@ -17,7 +17,6 @@ namespace bmpTest
         private int _realW;
         private byte[] lastBites;
         private byte[][][] _data;
-        private byte nullb;
 
         public Pict(string path)
         {
@@ -58,33 +57,37 @@ namespace bmpTest
                 int width = _realW*3;
                 while (width % 4 != 0)
                 {
-                    nullb = br.ReadByte();
+                    br.ReadByte();
                     width++;
                 }
             }
             br.Close();
         }
+
         public void ToFile(string path)
         {
-            BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create));
-            bw.Write(first2bites);
-            bw.Write(_flSize);
-            bw.Write(next8bites);
-            bw.Write(bcSize);
-            bw.Write(_pictW16>_pictW32?_pictW16:_pictW32);
-            bw.Write((_pictH16>_pictH32?_pictH16:_pictH32));
-            bw.Write(lastBites);
-            for (int i = 0; i < _realH; i++)
-            {
-                for (int j = 0; j < _realW; j++)
+            using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create)))
+            { 
+                bw.Write(first2bites);
+                bw.Write(_flSize);
+                bw.Write(next8bites);
+                bw.Write(bcSize);
+                bw.Write(_pictW16 > _pictW32 ? _pictW16 : _pictW32);
+                bw.Write((_pictH16 > _pictH32 ? _pictH16 : _pictH32));
+                bw.Write(lastBites);
+                for (int i = 0; i < _realH; i++)
                 {
-                    bw.Write(_data[i][j]);
-                }
-                int width = _realW*3;
-                while (width%4!=0) 
-                {
-                    bw.Write(nullb);
-                    width++;
+                    for (int j = 0; j < _realW; j++)
+                    {
+                        bw.Write(_data[i][j]);
+                    }
+
+                    int width = _realW * 3;
+                    while (width % 4 != 0)
+                    {
+                        bw.Write((byte) 0);
+                        width++;
+                    }
                 }
             }
         }
