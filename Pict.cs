@@ -166,7 +166,28 @@ namespace bmpTest
             {
                 nnData[i] = new byte[newW][];
             }
-            _data = nData;
+            for (int i = 0; i < newW; i++)
+            {
+                //nData[i] = new byte[newW][];
+                for (int j = 0; j < newH; j++)
+                {
+                    nnData[i][j] = new byte[3];
+                    double placeInOld = (double) (j + 1) * _realH / newH;
+                    if (placeInOld < 1) nnData[j][i] = nData[0][i];
+                    else if (placeInOld > (double)_realH - 1) nData[j][i] = _data[_realH - 1][i];
+                    else {
+                        var upper = (int)Math.Round(placeInOld, MidpointRounding.ToNegativeInfinity);
+                        double coefUp = placeInOld - upper;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            var clr = (double)_data[upper][i][k] * coefUp + (double)_data[upper + 1][i][k] * (1 - coefUp);
+                            nData[j][i][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
+                        }
+                    }
+                }
+            }
+            _data = nnData;
+            _flSize = 14 + bcSize + (_realW % 4 == 0 ? _realW * _realH * 3 : (_realW * 3 + 4 - _realW * 3 % 4) * _realH);
             Console.WriteLine("Currently rabotayu.");
         }
     }
