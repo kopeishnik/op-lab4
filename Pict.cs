@@ -20,6 +20,11 @@ namespace bmpTest
 
         public Pict(string path)
         {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("Input file does not exist");
+                return;
+            }
             BinaryReader br = new BinaryReader(new FileStream(path, FileMode.Open));
             first2bites = br.ReadBytes(2);
             _flSize = br.ReadInt32();
