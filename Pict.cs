@@ -68,7 +68,19 @@ namespace bmpTest
             }
             br.Close();
         }
-
+        public void Mirror()
+        {
+            byte[][][] _ndata = new byte[_realH][][];
+            for (int i = 0; i < _realH; i++)
+            {
+                _ndata[i] = new byte[_realW][];
+                for (int j = 0; j < _realW; j++)
+                {
+                    _ndata[i][j] = _data[i][_realW-1-j];
+                }
+            }
+            _data = _ndata;
+        }
         public void ToFile(string path)
         {
             using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create)))
@@ -119,6 +131,21 @@ namespace bmpTest
             _flSize = 14 + bcSize + (_realW % 4 == 0
                 ? _realW * _realH * 3
                 : (_realW * 3 + 4 - _realW * 3 % 4) * _realH);
+        }
+        public void Reduce(Int16 coef)
+        {
+            Console.WriteLine("It does NOT work! What did you expected?");
+        }
+        public void BiLinearInterpolation(Double coef) 
+        {
+            var newH = (int)Math.Round(_realH * coef, MidpointRounding.AwayFromZero);
+            var newW = (int)Math.Round(_realW * coef, MidpointRounding.AwayFromZero);
+            //byte[][][] nData = new byte[newH][][];
+            for (int i = 0; i < newH; i++)
+            {
+                continue;
+            }
+            Console.WriteLine("Currently rabotayu.");
         }
     }
 }

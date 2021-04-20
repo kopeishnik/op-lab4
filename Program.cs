@@ -25,37 +25,23 @@ namespace bmpTest
             _nFlName = args[3];
             if (_szCoef < 0)
             {
-                Console.WriteLine("Size coefficient should be positive!");
-                Console.Beep();
-                return -1;
+                Console.Beep(); // why not axaxaxax (pust budet)
+                inp.Mirror();
+                _szCoef *= -1;
             }
             switch (args[1])
             {
                 case "--enlarge":
                     if (_szCoef>1&&_szCoef%1==0) inp.Enlarge((short)_szCoef);
-                    else inp.Enlarge(_szCoef);
+                    else inp.Enlarge((short)_szCoef);
                     break;
                 case "--reduce":
-                    inp.Reduce(_szCoef);
+                    inp.Reduce((short)_szCoef); //workn't
                     break;
             }
             inp.ToFile(_path + _nFlName);
             Console.WriteLine("Success!");
             return 0;
-        }
-
-        static void GetFromUser()
-        {
-            Console.Write("Enter the filename: ");
-            _path = Environment.CurrentDirectory;
-            _flName = Console.ReadLine();
-            if (_flName==null||_flName.Length<5) _flName = @"\bmp.bmp";
-            Console.Write("Enter the new filename: ");
-            _nFlName = Console.ReadLine();
-            if (_nFlName==null||_nFlName.Length<5) _nFlName = @"\new.bmp";
-            Console.Write("Enter the size coefficient: ");
-            string n = Console.ReadLine();
-            if (n!=null&&Double.Parse(n)!=0) _szCoef = Double.Parse(n);
         }
     }
 }
