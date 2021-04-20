@@ -166,6 +166,7 @@ namespace bmpTest
             {
                 nnData[i] = new byte[newW][];
             }
+            _data = nData;
             Console.WriteLine("Currently rabotayu.");
         }
     }
