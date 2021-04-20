@@ -15,7 +15,7 @@ namespace bmpTest
             GetFromUser();
             Pict inp = new Pict(_path + _flName);
             if (_szCoef>1&&_szCoef%1==0) inp.Enlarge((short)_szCoef);
-            else if (_szCoef<1&&_szCoef%1==0)
+            //else if (_szCoef<1&&_szCoef%1==0)
             inp.ToFile(_path + _nFlName);
         }
 
