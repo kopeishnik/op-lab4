@@ -14,6 +14,7 @@ namespace bmpTest
             _path = Environment.CurrentDirectory+@"\";
             if (args.Length == 0) 
             {
+                Console.WriteLine(_path);
                 Console.WriteLine("Enter file name please:");
                 _flName = Console.ReadLine();
                 Console.WriteLine("Enter new file name:");

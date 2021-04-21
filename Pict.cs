@@ -166,23 +166,23 @@ namespace bmpTest
             {
                 for (int j = 0; j < newH; j++)
                 {
-                    nnData[i][j] = new byte[3];
+                    nnData[j][i] = new byte[3];
                     double placeInOld = (double) (j + 1) * _realH / newH;
                     if (placeInOld < 1) nnData[j][i] = nData[0][i];
-                    else if (placeInOld > (double)_realH - 1) nData[j][i] = _data[_realH - 1][i];
+                    else if (placeInOld > (double)_realH - 1) nnData[j][i] = nData[_realH - 1][i];
                     else {
                         var upper = (int)Math.Round(placeInOld, MidpointRounding.ToNegativeInfinity);
                         double coefUp = placeInOld - upper;
                         for (int k = 0; k < 3; k++)
                         {
-                            var clr = (double)_data[upper][i][k] * coefUp + (double)_data[upper + 1][i][k] * (1 - coefUp);
-                            nData[j][i][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
+                            var clr = (double)nData[upper][i][k] * coefUp + (double)nData[upper + 1][i][k] * (1 - coefUp);
+                            nnData[j][i][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
                         }
                     }
                 }
             }
-            _realH *= newH;
-            _realW *= newH;
+            _realH = newH;
+            _realW = newH;
             if (_pictH16 == 0 && _pictW16 == 0)
             {
                 _pictH32 = newH;
