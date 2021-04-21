@@ -21,7 +21,7 @@ namespace bmpTest
                 Console.WriteLine("How many times you want picture size?");
                 _szCoef = double.Parse(Console.ReadLine());
             }
-            if (args.Length > 0 && args.Length < 3)
+            else if (args.Length > 0 && args.Length < 3)
             {
                 Console.WriteLine("Too few arguments!");
                 Console.Beep(); 
