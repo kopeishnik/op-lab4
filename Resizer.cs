@@ -65,7 +65,7 @@ namespace bmpTest
                         double coefLeft = placeInOld - lower;
                         for (int k = 0; k < 3; k++)
                         {
-                            var clr = (double)pic._data[i][lower][k] * coefLeft + (double)pic._data[i][lower + 1][k] * (1 - coefLeft);
+                            var clr = (double)pic._data[i][lower][k] * (1 - coefLeft) + (double)pic._data[i][lower + 1][k] * coefLeft;
                             nData[i][j][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
                         }
                     }
@@ -90,7 +90,7 @@ namespace bmpTest
                         double coefUp = placeInOld - upper;
                         for (int k = 0; k < 3; k++)
                         {
-                            var clr = (double)nData[upper][i][k] * coefUp + (double)nData[upper + 1][i][k] * (1 - coefUp);
+                            var clr = (double)nData[upper][i][k] * (1 - coefUp) + (double)nData[upper + 1][i][k] * coefUp;
                             nnData[j][i][k] = (byte)Math.Round(clr, MidpointRounding.ToNegativeInfinity);
                         }
                     }
