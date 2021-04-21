@@ -34,11 +34,11 @@ namespace bmpTest
                 _nFlName = args[1];
                 _szCoef = Double.Parse(args[2]);
             }
-            Pict inp = new Pict(_path + _flName);
+            Picture inp = FileIO.ReadFile(_path + _flName);
             if (_szCoef < 0)
             {
                 Console.WriteLine("Mirroring the image!");
-                inp.Mirror();
+                Resizer.Mirror(inp);
                 _szCoef *= -1;
             }
             if (_szCoef == 0) {
@@ -47,13 +47,14 @@ namespace bmpTest
             }
             else if (_szCoef == Math.Round(_szCoef, MidpointRounding.ToNegativeInfinity) && _szCoef > 1)
             {
-                inp.Enlarge((short)_szCoef);
+                Resizer.Enlarge(inp, (short)_szCoef);
             }
             else
             {
-                inp.BiLinearInterpolation(_szCoef);
+                Resizer.BiLinearInterpolation(inp, _szCoef);
             }
-            inp.ToFile(_path + _nFlName);
+            //inp.ToFile(_path + _nFlName);
+            FileIO.WriteFile(inp, _path + _nFlName);
             Console.WriteLine("Success!");
             return 0;
         }
